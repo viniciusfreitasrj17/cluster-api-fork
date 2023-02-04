@@ -37,17 +37,29 @@ function throwErrorTreated(...args) {
   }
 }
 
+async function throwErrorPromise(...args) {
+  await Promise.reject('No treated on promise')
+
+  return {
+    status: 200,
+    headers,
+    message: JSON.stringify({ Message: 'No treated on promise'}),
+    error: null
+  }
+}
+
 function throwError(...args) {
   throw new Error('Some error no treated')
 }
 
-const server = createServer((req, res) => {
+const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
 
   const routes = {
     '/success': success,
     '/throw-error': throwError,
     '/throw-error-treated': throwErrorTreated,
+    '/throw-error-promise': throwErrorPromise,
   }
   
   const { 
@@ -56,7 +68,7 @@ const server = createServer((req, res) => {
     message,
     error,
   } = routes[url.pathname] 
-    ? routes[url.pathname](req.method) 
+    ? await routes[url.pathname](req.method) 
     : notFound(req.method)
   
   res.writeHead(status, headers)
