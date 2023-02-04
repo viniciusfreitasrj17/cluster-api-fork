@@ -24,17 +24,21 @@ function notFound(method) {
   }
 }
 
-function throwError(...args) {
-  throw new Error('Some error')
+function throwErrorTreated(...args) {
+  try {
+    throw new Error('Some error')
+  } catch (error) {
+    return {
+      status: 500,
+      headers,
+      message: null,
+      error: JSON.stringify({ error: error.message })
+    }
+  }
 }
 
-function fail(error) {
-  return {
-    status: 500,
-    headers,
-    message: null,
-    error: JSON.stringify({ error })
-  }
+function throwError(...args) {
+  throw new Error('Some error no treated')
 }
 
 const server = createServer((req, res) => {
@@ -42,19 +46,21 @@ const server = createServer((req, res) => {
 
   const routes = {
     '/success': success,
-    '/throwError': throwError,
+    '/throw-error': throwError,
+    '/throw-error-treated': throwErrorTreated,
   }
   
   const { 
     status,
     headers,
     message,
+    error,
   } = routes[url.pathname] 
     ? routes[url.pathname](req.method) 
     : notFound(req.method)
   
   res.writeHead(status, headers)
-  return res.end(message)
+  return res.end(message || error)
 })
 
 server

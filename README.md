@@ -13,8 +13,8 @@ npm run dev
 ## Pending
 
 - [x] route return 200 (/success)
-- [x] route with error no treated (/throwError)
-- [ ] route with error treated
+- [x] route with error no treated (/throw-error)
+- [x] route with error treated (/throw-error-treated)
 - [ ] route with error promise no treated
 - [ ] route with error promise treated
 - [ ] route with memory leak
