@@ -10,6 +10,12 @@
 npm run dev
 ```
 
+- Run tests:
+
+```sh
+npm test
+```
+
 ## Pending
 
 - [x] route return 200 (/success)
@@ -17,6 +23,7 @@ npm run dev
 - [x] route with error treated (/throw-error-treated)
 - [x] route with error promise no treated (/throw-error-promise)
 - [x] route with error promise treated (/throw-error-promise-treated)
+- [x] add tests
 - [ ] route with memory leak
 - [ ] route throw kill process
 - [ ] create cluster

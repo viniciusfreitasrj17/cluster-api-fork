@@ -7,7 +7,7 @@ function notFound(method) {
     return {
       status: 404,
       headers,
-      message: JSON.stringify({ Message: "Not Found"}),
+      message: JSON.stringify({ message: "Not Found"}),
       error: null
     }
   }
@@ -18,19 +18,19 @@ function success(method) {
     return {
       status: 200,
       headers,
-      message: JSON.stringify({ Message: "Success"}),
+      message: JSON.stringify({ message: "Success"}),
       error: null
     }
   }
 }
 
 function throwError(...args) {
-  throw new Error('Some error no treated')
+  throw new Error('No treated some error')
 }
 
 function throwErrorTreated(...args) {
   try {
-    throw new Error('Some error')
+    throw new Error('Treated some error')
   } catch (error) {
     return {
       status: 500,
@@ -58,7 +58,7 @@ async function throwErrorPromiseTreated(...args) {
   }
 }
 
-const server = createServer(async (req, res) => {
+export const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
 
   const routes = {
@@ -81,6 +81,3 @@ const server = createServer(async (req, res) => {
   res.writeHead(status, headers)
   return res.end(message || error)
 })
-
-server
-  .listen(3000, () => console.log('Server running at 3000...'))
