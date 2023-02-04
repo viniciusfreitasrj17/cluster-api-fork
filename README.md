@@ -1,7 +1,6 @@
 # Cluster API
 
-- A Simple API running
-- with graceful shutdown
+- A Simple API running with Cluster in Node.js
 
 ## Run
 
