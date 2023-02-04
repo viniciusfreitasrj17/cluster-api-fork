@@ -2,6 +2,17 @@ import { createServer } from 'http'
 
 const headers = {"Content-Type": "application/json"}
 
+function notFound(method) {
+  if (method === "GET") {
+    return {
+      status: 404,
+      headers,
+      message: JSON.stringify({ Message: "Not Found"}),
+      error: null
+    }
+  }
+}
+
 function success(method) {
   if (method === "GET") {
     return {
@@ -13,15 +24,8 @@ function success(method) {
   }
 }
 
-function notFound(method) {
-  if (method === "GET") {
-    return {
-      status: 404,
-      headers,
-      message: JSON.stringify({ Message: "Not Found"}),
-      error: null
-    }
-  }
+function throwError(...args) {
+  throw new Error('Some error no treated')
 }
 
 function throwErrorTreated(...args) {
@@ -39,17 +43,19 @@ function throwErrorTreated(...args) {
 
 async function throwErrorPromise(...args) {
   await Promise.reject('No treated on promise')
-
-  return {
-    status: 200,
-    headers,
-    message: JSON.stringify({ Message: 'No treated on promise'}),
-    error: null
-  }
 }
 
-function throwError(...args) {
-  throw new Error('Some error no treated')
+async function throwErrorPromiseTreated(...args) {
+  try {
+    await Promise.reject('Treated on promise')
+  } catch (error) {
+    return {
+      status: 500,
+      headers,
+      message: null,
+      error: JSON.stringify({ error })
+    }
+  }
 }
 
 const server = createServer(async (req, res) => {
@@ -60,6 +66,7 @@ const server = createServer(async (req, res) => {
     '/throw-error': throwError,
     '/throw-error-treated': throwErrorTreated,
     '/throw-error-promise': throwErrorPromise,
+    '/throw-error-promise-treated': throwErrorPromiseTreated,
   }
   
   const { 
