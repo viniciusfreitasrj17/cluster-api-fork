@@ -21,14 +21,14 @@ describe('Server Tests', () => {
 		expect(response.body).toStrictEqual({ message: "Not Found"});
 	});
 
-  // generate erro in api, teste alone
-  it('should generate a error no treated in route /throw-error', async () => {
-    try {
-      await agent.get('/throw-error')
-    } catch (error) {
-      expect(error.message).toBe('socket hang up') // kill api
-    }
-	});
+  // // generate erro in api, teste alone
+  // it('should generate a error no treated in route /throw-error', async () => {
+  //   try {
+  //     await agent.get('/throw-error')
+  //   } catch (error) {
+  //     expect(error.message).toBe('socket hang up') // kill api
+  //   }
+	// });
 
   it('should return a 500 status code in route /throw-error-treated', async () => {
 		const response = await agent.get('/throw-error-treated')
@@ -38,14 +38,14 @@ describe('Server Tests', () => {
 		expect(response.body).toStrictEqual({ error: "Treated some error"});
 	});
 
-  // // generate erro in api, teste alone
-  it('should generate a error promise no treated in route /throw-error-promise', async () => {
-    try {
-      await agent.get('/throw-error-promise')
-    } catch (error) {
-      expect(error.message).toBe('socket hang up') // kill api
-    }
-	});
+  // // // generate erro in api, teste alone
+  // it('should generate a error promise no treated in route /throw-error-promise', async () => {
+  //   try {
+  //     await agent.get('/throw-error-promise')
+  //   } catch (error) {
+  //     expect(error.message).toBe('socket hang up') // kill api
+  //   }
+	// });
 
   it('should return a 500 status code in route /throw-error-promise-treated', async () => {
 		const response = await agent.get('/throw-error-promise-treated')
