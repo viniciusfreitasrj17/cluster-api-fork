@@ -1,9 +1,12 @@
+import { processId } from "./bootstrap.js"
+
 export const routes = {
   '/success': success,
   '/throw-error': throwError,
   '/throw-error-treated': throwErrorTreated,
   '/throw-error-promise': throwErrorPromise,
   '/throw-error-promise-treated': throwErrorPromiseTreated,
+  '/throw-error-kill': throwErrorKill,
 }
 
 const headers = {"Content-Type": "application/json"}
@@ -62,4 +65,8 @@ async function throwErrorPromiseTreated(...args) {
       error: JSON.stringify({ error })
     }
   }
+}
+
+function throwErrorKill(...args) {
+  process.kill(processId)
 }

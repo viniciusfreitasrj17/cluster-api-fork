@@ -25,9 +25,7 @@ npm test
 - [x] route with error promise treated (/throw-error-promise-treated)
 - [x] add tests
 - [x] organize routes
-- [ ] route with memory leak
-- [ ] implement memory test
-- [ ] route throw kill process
+- [x] route throw kill process (/throw-error-kill)
 - [ ] create cluster
 - [ ] graceful shutdown
 - [ ] capture errors no treated
