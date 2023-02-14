@@ -1,5 +1,3 @@
-import { processId } from "./bootstrap.js"
-
 export const routes = {
   '/success': success,
   '/throw-error': throwError,
@@ -27,7 +25,7 @@ function success(method) {
     return {
       status: 200,
       headers,
-      message: JSON.stringify({ message: "Success"}),
+      message: JSON.stringify({ message: `ok ::: pid: ${process.pid}`}),
       error: null
     }
   }
@@ -68,5 +66,5 @@ async function throwErrorPromiseTreated(...args) {
 }
 
 function throwErrorKill(...args) {
-  process.kill(processId)
+  process.kill(process.pid)
 }

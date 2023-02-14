@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node src/bootstrap.js",
     "dev": "nodemon src/bootstrap.js",
+    "cluster": "nodemon src/cluster.js",
     "test": "npx jest --verbose --detectOpenHandles --runInBand --forceExit"
   },
   "keywords": [],

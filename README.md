@@ -4,13 +4,19 @@
 
 ## Run
 
-- Run app:
+- Run dev:
   
 ```sh
 npm run dev
 ```
 
-- Run tests:
+- Run cluster:
+  
+```sh
+npm run cluster
+```
+
+- Run tests (this tests should be run with cluster up):
 
 ```sh
 npm test
@@ -26,7 +32,7 @@ npm test
 - [x] add tests
 - [x] organize routes
 - [x] route throw kill process (/throw-error-kill)
-- [ ] create cluster
+- [x] create cluster
 - [ ] graceful shutdown
 - [ ] capture errors no treated
 - [ ] implement load test
