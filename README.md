@@ -33,7 +33,7 @@ npm test
 - [x] organize routes
 - [x] route throw kill process (/throw-error-kill)
 - [x] create cluster
-- [ ] graceful shutdown
+- [x] graceful shutdown
 - [ ] capture errors no treated
 - [ ] implement load test
 - [ ] implement middleware, like express
