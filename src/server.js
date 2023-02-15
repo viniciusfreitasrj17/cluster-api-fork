@@ -1,18 +1,42 @@
 import { createServer } from 'http'
 import { routes, notFound } from './routes.js'
 
-export const server = createServer(async (req, res) => {
+export const server = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
-  
-  const { 
-    status,
-    headers,
-    message,
-    error,
-  } = routes[url.pathname] 
-    ? await routes[url.pathname](req.method) 
+
+  const data = routes[url.pathname]
+    ? routes[url.pathname](req.method)
     : notFound(req.method)
   
-  res.writeHead(status, headers)
-  return res.end(message || error)
+  let status = 500
+  let headers = {"Content-Type": "application/json"}
+  let message
+  let error = 'internal error'
+
+  if (data instanceof Promise) {   
+    (async () => {
+      const resp = await data.then(d => d)
+      if (resp) {
+        status = resp.status
+        headers = resp.headers
+        message = resp.message
+        error = resp.error
+      }
+  
+      res.writeHead(status, headers)
+      return res.end(message || error)
+    })()
+  } else {
+    const resp = data
+    if (resp) {
+      status = resp.status
+      headers = resp.headers
+      message = resp.message
+      error = resp.error
+    }
+
+    res.writeHead(status, headers)
+    return res.end(message || error)
+  }
+  
 })

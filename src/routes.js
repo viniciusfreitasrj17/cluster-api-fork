@@ -48,8 +48,8 @@ function throwErrorTreated(...args) {
   }
 }
 
-async function throwErrorPromise(...args) {
-  await Promise.reject('No treated on promise')
+function throwErrorPromise(...args) {
+  return Promise.reject('No treated on promise')
 }
 
 async function throwErrorPromiseTreated(...args) {

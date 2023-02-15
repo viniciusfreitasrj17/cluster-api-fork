@@ -4,6 +4,16 @@ server
   .listen(3000)
   .once('listening', () => console.log('Server running at 3000... ', process.pid));
 
+// capture errors no treated on uncaught
+process.on('uncaughtException', (error, origin) => {
+  console.log(`\n${origin} signal received. \n${error}`)
+})
+
+// capture errors no treated on prommise
+process.on('unhandledRejection', (error) => {
+  console.log(`\nunhandledRejection signal received. \n${error}`)
+})
+
 // --- graceful shutdown - no error
 function gracefulShutdown(event) {
   return (code) => {
