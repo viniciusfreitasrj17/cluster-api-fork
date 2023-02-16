@@ -1,5 +1,5 @@
 import { createServer } from 'http'
-import { routes, notFound } from './routes.js'
+import { routes, notFound } from './routes'
 
 export const server = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`)
@@ -11,7 +11,7 @@ export const server = createServer((req, res) => {
   let status = 500
   let headers = {"Content-Type": "application/json"}
   let message
-  let error = 'internal error'
+  let error = JSON.stringify({error:'internal error'})
 
   if (data instanceof Promise) {   
     (async () => {

@@ -5,16 +5,19 @@
   "main": "bootstrap.js",
   "type": "module",
   "scripts": {
-    "start": "node src/bootstrap.js",
-    "dev": "nodemon src/bootstrap.js",
-    "cluster": "nodemon src/cluster.js",
-    "test": "npx jest --detectOpenHandles --runInBand --forceExit"
+    "start": "node --experimental-specifier-resolution=node src/bootstrap.js",
+    "dev": "nodemon --experimental-specifier-resolution=node src/bootstrap.js",
+    "cluster": "node --experimental-specifier-resolution=node src/cluster.js",
+    "test": "npx jest --runInBand --forceExit --silent -- cluster.spec",
+    "test:load": "npx autocannon -c 500 -d 30 --workers 10 --renderStatusCodes --latency --warmup [ -c 1 -d 2 ] localhost:3000/success",
+    "posttest": "npx jest --runInBand --forceExit --silent -- posttest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
+    "autocannon": "^7.10.0",
     "jest": "^29.4.1",
     "nodemon": "^2.0.20",
     "supertest": "^6.3.3"
