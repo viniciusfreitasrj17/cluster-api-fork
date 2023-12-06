@@ -1,13 +1,12 @@
 import { spawn } from 'child_process';
-
-import { forkCount } from "./cluster";
+import { forkCount } from './config';
 
 describe('Server Post Tests', () => {
   jest.setTimeout(500)
   it(`should has ${forkCount} length forks running in finish test`, (done) => {
     const child4 = spawn('wc',   ['-l']);
     const child3 = spawn('grep', ['-v', 'grep']);
-    const child2 = spawn('grep', ['/src/cluster.js']);
+    const child2 = spawn('egrep', ["/src/\w+/cluster.js"]);
     const child1 = spawn('ps',   ['aux']);
 
     child1.stdout.pipe(child2.stdin);

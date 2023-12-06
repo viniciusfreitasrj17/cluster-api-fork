@@ -1,9 +1,8 @@
 import request from "supertest";
 import { spawn } from 'child_process';
+import { forkCount } from "./config";
 
-import { forkCount } from "./cluster";
-
-const headers = "application/json"
+const headers = "application/json; charset=utf-8"
 const baseUrl = "localhost:3000"
 const agent = request(baseUrl)
 
@@ -11,7 +10,7 @@ describe('Server Tests', () => {
   it(`should has ${forkCount} length forks running in start test`, (done) => {
     const child4 = spawn('wc',   ['-l']);
     const child3 = spawn('grep', ['-v', 'grep']);
-    const child2 = spawn('grep', ['/src/cluster.js']);
+    const child2 = spawn('egrep', ['\/src\/\w+\/cluster\.js']);
     const child1 = spawn('ps',   ['aux']);
 
     child1.stdout.pipe(child2.stdin);

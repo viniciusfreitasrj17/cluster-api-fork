@@ -1,7 +1,7 @@
-import gracefulShutdown from './graceful-shutdown';
-import { server } from './server'
+import gracefulShutdown from '../graceful-shutdown';
+import { app } from './app'
 
-server
+const server = app
   .listen(3000)
   .once('listening', () => console.log('Server running at 3000... ', process.pid));
 

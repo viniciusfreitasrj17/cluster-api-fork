@@ -1,5 +1,5 @@
-import os from 'os'
 import cluster from 'cluster'
+import { forkCount as forkCountDefault } from './config'
 
 const runPrimaryProcess = (forkCount) => {
   const processesCount = Number(forkCount)
@@ -17,14 +17,16 @@ const runPrimaryProcess = (forkCount) => {
   })
 }
 
-const runWorkerProcess = async (bootstrapPath) => {
-  await import(String(bootstrapPath))
+const runWorkerProcess = async (bootstrapRelativePath) => {
+  await import(String(bootstrapRelativePath))
 }
 
 /**
- * @param {string} bootstrapPath bootstrap path to run clustering
+ * @param {string} bootstrapRelativePath bootstrap path to run clustering
  * @param {number} forkCount fork count to schedule, default: cpu.length * 2
  */
-export default function clusterFactory(bootstrapPath, forkCount) {
-  cluster.isPrimary ? runPrimaryProcess(forkCount || os.cpus().length * 2) : runWorkerProcess(bootstrapPath)
+export default function clusterFactory(bootstrapRelativePath, forkCount) {
+  cluster.isPrimary 
+    ? runPrimaryProcess(forkCount || forkCountDefault) 
+    : runWorkerProcess(process.cwd() + '/' + bootstrapRelativePath)
 }
